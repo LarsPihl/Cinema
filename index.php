@@ -152,21 +152,29 @@ require __DIR__ . "/functions.php";
 
     /*The Seating chart is printed as a "<div> for each row, each containing 8 small "<div>"-elements. 
     A row counter is used to print the row number of each row. The assigned string on each seat is used to
-    give the seats different background colours depending on if they are taken, available or sold to the user.*/
+    give the seats different background colours depending on if they are taken, available or sold to the user.
+    A row counter is used in order to give different bottom margins to the different seats, in order to arrange
+    the seats in a cinematic way.*/
 
     $rowCounter = 1;
     
     foreach ($seatChart as $key) {
-
+        $seatCounter = 1;
         echo "Row " . $rowCounter . ": ";
         $rowCounter++;
         ?> <div class=seatChart><?php
 
         foreach ($key as $value) {
+            if ($seatCounter == 1 || $seatCounter == 8) $margin = 70;
+            else if ($seatCounter == 2 || $seatCounter == 7) $margin = 50;
+            else if ($seatCounter == 3 || $seatCounter == 6) $margin = 30;
+            else $margin = 0;
             if ($value == "A") $color = "green";
             else if ($value == "YS") $color = "yellow";
             else $color = "red";
-            ?> <div class="seat" style="background-color: <?php echo $color; ?>;"> <?php echo $value . " "; ?> </div> <?php
+            ?> <div class="seat" style="background-color: <?php echo $color; ?>; margin-bottom: 
+            <?php echo $margin; ?>px";> <?php echo $value . " "; ?> </div> <?php
+        $seatCounter++;
         }
         ?>
 
